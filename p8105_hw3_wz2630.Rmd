@@ -164,3 +164,30 @@ brfss |>
 
 
 ## Problem 3
+
+load data
+```{r}
+participant_demographic = 
+  read_csv(file = "./data/nhanes_covar.csv") |> 
+  janitor::clean_names()
+
+accelerometer_data = 
+  read_csv(file = "./data/nhanes_accel.csv") |> 
+  janitor::clean_names()
+  
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
