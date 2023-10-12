@@ -145,7 +145,8 @@ excellent_responses |>
   labs(x = "Year", 
        y = "Average Data Values", 
        title = "Average data values across years for each state") + 
-  theme(legend.position = "right")
+  theme(legend.position = "right",
+        legend.box.background = element_rect())
 ```
 
 Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State
@@ -159,7 +160,8 @@ brfss |>
   labs(x = "Response", 
        y = "Data Value",
        title = "Distribution of responses among locations in NY State (2006 and 2010)") + 
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        panel.spacing = unit(1, "lines"))
 ```
 
 
@@ -182,27 +184,37 @@ accel =
 
 Merger demographic and accelerometer datasets:
 ```{r}
-nhanes_accelerometer = 
+nhanes = 
   inner_join(covar, accel, by = "seqn")
 
 ```
 
 Factor variables and rename
 ```{r}
-nhanes_accelerometer$sex = factor(nhanes_accelerometer$sex, 
+nhanes$sex = factor(nhanes$sex, 
                                   levels = c("1", "2"),
                                   labels = c("male", "female"))
 
-nhanes_accelerometer$education = factor(nhanes_accelerometer$education, 
+nhanes$education = factor(nhanes$education, 
                                   levels = c("1", "2", "3"),
                                   labels = c("less than high school", "high school equivalent", "more than high school"))
 ```
 
-
+Encode data with reasonable variable classes
 ```{r}
-
+nhanes$seqn = as.integer(nhanes$seqn)
+nhanes$age = as.integer(nhanes$age)
+nhanes$bmi = as.integer(nhanes$bmi)
 ```
 
+Produce a reader-friendly table for the number of men and women in each education category, and create a visualization of the age distributions for men and women in each education category. Comment on these items.
+```{r}
+nhanes |> 
+  group_by(sex, education) |> 
+  summarize(count = n()) |> 
+  pivot_wider(names_from = education, values_from = count) |> 
+  knitr::kable(digits = 1)
+```
 
 
 
