@@ -149,18 +149,18 @@ excellent_responses |>
 ```
 
 Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State
-
-two_panel_plot = 
+```{r}
+# two_panel_plot
 brfss |> 
-  filter(year %in% c(2006, 2010)) |> 
-  pivot_longer(
-    Poor:Excellent,
-    names_to = "state",
-    values_to = "repsonse") |> 
-  ggplot(aes(x = year, y = response, color = response)) +
+  filter(year %in% c(2006, 2010), locationabbr == "NY") |> 
+  ggplot(aes(x = response, y = data_value, color = response)) +
   geom_boxplot() + 
-  facet_grid(.~year)
-
+  facet_wrap(~year) + 
+  labs(x = "Response", 
+       y = "Data Value",
+       title = "Distribution of responses among locations in NY State (2006 and 2010)") + 
+  theme(legend.position = "none")
+```
 
 
 ## Problem 3
