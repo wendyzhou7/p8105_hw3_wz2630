@@ -165,23 +165,43 @@ brfss |>
 
 ## Problem 3
 
-load data
+load data and clean
 ```{r}
-participant_demographic = 
-  read_csv(file = "./data/nhanes_covar.csv") |> 
-  janitor::clean_names()
+covar = 
+  read_csv(file = "./data/nhanes_covar.csv",
+           skip = 4) |> 
+  janitor::clean_names() |> 
+  filter(age >= 21) |> 
+  drop_na()
 
-accelerometer_data = 
+accel = 
   read_csv(file = "./data/nhanes_accel.csv") |> 
   janitor::clean_names()
   
 ```
 
+Merger demographic and accelerometer datasets:
+```{r}
+nhanes_accelerometer = 
+  inner_join(covar, accel, by = "seqn")
+
+```
+
+Factor variables and rename
+```{r}
+nhanes_accelerometer$sex = factor(nhanes_accelerometer$sex, 
+                                  levels = c("1", "2"),
+                                  labels = c("male", "female"))
+
+nhanes_accelerometer$education = factor(nhanes_accelerometer$education, 
+                                  levels = c("1", "2", "3"),
+                                  labels = c("less than high school", "high school equivalent", "more than high school"))
+```
 
 
+```{r}
 
-
-
+```
 
 
 
