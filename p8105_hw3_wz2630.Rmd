@@ -169,7 +169,7 @@ brfss |>
   theme(legend.position = "bottom",
         legend.box.background = element_rect(),
         panel.spacing = unit(1, "lines"),
-        axis.text.x = element_text(angle = 50, size = 7))
+        axis.text.x = element_text(angle = 50, size = 6.4))
 ```
 **Comments:**
 
