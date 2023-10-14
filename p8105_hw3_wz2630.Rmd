@@ -288,8 +288,7 @@ nhanes_pivotlonger <-
                values_to = "activity")  #turned all the time values to activity column
   
 nhanes_pivotlonger |> 
-  ggplot(aes(x = minute, y = activity, color = sex)) + 
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  ggplot(aes(x = minute, y = activity, color = sex)) +
   geom_line(alpha = 0.4, size = 0.5) + 
   geom_smooth(aes(group = sex), se = FALSE) + 
   facet_wrap(~education, ncol = 1) + 
